@@ -32,7 +32,7 @@ class ProductDbService extends DbService {
     const products = await this.findMany();
     const updatedProducts = products.map((product) => {
       return names.includes(product.item) 
-        ? { ...product, details: { ...product.details, last_ordered: DateTime.utc().toLocaleString() } } 
+        ? { ...product, details: { ...product.details, last_purchased: DateTime.utc().toLocaleString() } } 
         : product;
     });
 

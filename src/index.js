@@ -7,11 +7,16 @@ require('dotenv').config();
 
 const customerDbService = createCustomerDbService('deli_customers.json');
 const productDbService = createProductDbService('inventory.json');
-const fxHttp = axios.create({
-  baseURL: 'http://api.currencylayer.com/live',
-});
+const customerRequestsDbService = createCustomerRequestsDbService('customer_requests.json');
+const fxHttp = axios.create({ baseURL: 'http://api.currencylayer.com/live' });
 
-const app = createApp(customerDbService, productDbService, fxHttp, process.env.EXCHANGE_RATE_KEY);
+const app = createApp({ 
+  customerDbService, 
+  productDbService, 
+  customerRequestsDbService,
+  fxHttp, 
+  fxAccessKey: process.env.EXCHANGE_RATE_KEY 
+});
 
 // Setup server port
 const port = process.env.PORT || 8080;

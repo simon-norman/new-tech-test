@@ -2,13 +2,13 @@ const DbService = require("./db_service");
 const { DateTime } = require('luxon');
 
 class CustomerRequestsDbService extends DbService {
-  async insertOne(customerFirstName, customerLastName, customerId) {
+  async insertOne({ customer_first_name, customer_last_name, customer_id }) {
     const customerRequests = await this.findMany();
     const newRequest = {
       date: DateTime.utc().toLocaleString(),
-      customer_first_name: customerFirstName,
-      customer_last_name: customerLastName,
-      customer_id: customerId,
+      customer_first_name,
+      customer_last_name,
+      customer_id,
     };
     const updatedRequests = [newRequest, ...customerRequests];
 
@@ -16,6 +16,6 @@ class CustomerRequestsDbService extends DbService {
   }
 }
 
-const createCustomerDbService = (path) => new CustomerDbService(path);
+const createCustomerRequestsDbService = (path) => new CustomerRequestsDbService(path);
 
-module.exports = createCustomerDbService;
+module.exports = createCustomerRequestsDbService;

@@ -20,14 +20,13 @@ class ProductController {
       details: { ...product.details, price: newPrice }
     });
 
-    response.status(200);
-    next();
+    response.sendStatus(200);
   }
 
   add = async (request, response, next) => {
     await this.productDbService.insertOne(request.body);
 
-    response.status(200);
+    response.sendStatus(200);
   }
 }
 

@@ -25,12 +25,12 @@ class CustomerDbService extends DbService {
     return customers.find((customer) => customer.id.toString() === id);
   }
 
-  async addLatestTransaction(customerId, amount) {
+  async addLatestTransaction(amount, customerId) {
     const customers = await this.findMany();
     const transaction = { amount, date: DateTime.utc().toLocaleString() }
 
     const updatedCustomers = customers.map((customer) => {
-      customer.id === customerId
+      return customer.id.toString() === customerId
         ? { ...customer, last_transactions: [transaction, ...customer.last_transactions]} 
         : customer;
     });

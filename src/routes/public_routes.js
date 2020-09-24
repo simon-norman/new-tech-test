@@ -1,11 +1,11 @@
 const express = require('express');
 
-function createPrivateRoutes(ordersController) {
+function createPublicRoutes(ordersController) {
   const router = express.Router();
 
-  router.post('customers/:customerId/orders', ordersController.create);
+  router.post('/customers/:customerId/orders', ordersController.create);
 
   return router;
 }
 
-module.exports = createPrivateRoutes;
+module.exports = createPublicRoutes;

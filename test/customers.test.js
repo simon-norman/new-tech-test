@@ -1,16 +1,26 @@
 const request = require('supertest');
 const createApp = require('../src/create_app');
 const createCustomerDbService = require('../src/data/customer_db_service');
+const createProductDbService = require('../src/data/product_db_service');
 const testCustomerData = require('./customer_test_data');
 
-describe('Given that there are two customers in the database', () => {
+jest.mock('../src/services/authentication.js', () => (request, response, next) => {
+  next();
+});
+
+describe('Given that there are three customers in the database', () => {
   let customerDbService;
+  let productDbService;
   let writeSpy;
 
   beforeEach(() => {
     customerDbService = createCustomerDbService('/fake-path');
     jest.spyOn(customerDbService, 'read').mockImplementation(async () => testCustomerData);
     writeSpy = jest.spyOn(customerDbService, 'write').mockImplementation(async () => {});
+    
+    productDbService = createProductDbService('/fake-path');
+    jest.spyOn(productDbService, 'read').mockImplementation(async () => testInventoryData);
+    jest.spyOn(productDbService, 'write').mockImplementation(async () => {});
   });
 
   afterEach(() => {
@@ -21,11 +31,11 @@ describe('Given that there are two customers in the database', () => {
     const extractListCustomerData = ({ first_name, last_name, email }) => ({ first_name, last_name, email});
     const expectedData = testCustomerData.map(extractListCustomerData);
 
-    const app = createApp(customerDbService);
+    const app = createApp({ customerDbService, productDbService });
 
     const { body } = await request(app)
       .get('/customers');
-    expect(body.length).toBe(2);
+    expect(body.length).toBe(3);
     expect(body).toEqual(expectedData);
   });
 
@@ -39,7 +49,7 @@ describe('Given that there are two customers in the database', () => {
   });
   
   test('returns distance between specified customer and specified distance', async () => {
-    const app = createApp(customerDbService);
+    const app = createApp({ customerDbService, productDbService });
 
     const { body } = await request(app)
       .get('/customers/1/distance')
