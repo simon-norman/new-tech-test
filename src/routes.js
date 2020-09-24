@@ -5,6 +5,8 @@ function createRoutes(customerController) {
 
   router.get('/customers', customerController.list);
 
+  router.get(`/customers/:customerId/distance`, customerController.calculateDistance)
+
   return router;
 }
 

@@ -25,6 +25,10 @@ const testCustomerData = [
         amount: '4393.01'
       },
       {
+        date: '10/29/2012',
+        amount: '8647.28'
+      },
+      {
         date: '10/29/2014',
         amount: '8647.28'
       },

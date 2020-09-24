@@ -2,6 +2,7 @@ const express = require('express');
 const createCustomerController = require('./controllers/customer.controller');
 const createRoutes = require('./routes');
 const bodyParser = require('body-parser');
+const createCustomerDbService = require('./data/customer_db_service');
 
 function createApp(customerDbService) {
   // Initialize the app
