@@ -6,7 +6,6 @@ class Scheduler {
   }
 
   scheduleSortTransactions() {
-    console.log('ABOUT TO SCHEDULE');
     cron.schedule('0 1 * * wed', () => {
       this.customerDbService.sortRecentTransactions();
     }, {
