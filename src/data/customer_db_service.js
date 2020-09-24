@@ -1,4 +1,5 @@
 const DbService = require("./db_service");
+const { DateTime } = require('luxon');
 
 class CustomerDbService extends DbService {
   async sortRecentTransactions() {
@@ -22,6 +23,19 @@ class CustomerDbService extends DbService {
     const customers = await this.findMany();
 
     return customers.find((customer) => customer.id.toString() === id);
+  }
+
+  async addLatestTransaction(customerId, amount) {
+    const customers = await this.findMany();
+    const transaction = { amount, date: DateTime.utc().toLocaleString() }
+
+    const updatedCustomers = customers.map((customer) => {
+      customer.id === customerId
+        ? { ...customer, last_transactions: [transaction, ...customer.last_transactions]} 
+        : customer;
+    });
+
+    await this.updateMany(updatedCustomers);
   }
 }
 

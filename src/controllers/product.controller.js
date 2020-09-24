@@ -18,7 +18,7 @@ class ProductController {
       ...product, 
       supplier_details: { ...product.supplier_details, currency },
       details: { ...product.details, price: newPrice }
-    })
+    });
 
     response.status(200);
     next();

@@ -1,4 +1,5 @@
 const DbService = require("./db_service");
+const { DateTime } = require('luxon');
 
 class ProductDbService extends DbService {
   async findOne(name) {
@@ -19,6 +20,23 @@ class ProductDbService extends DbService {
     const products = await this.findMany();
 
     await this.write([...products, product]);
+  }
+
+  async findManyByName(names) {
+    const products = await this.findMany();
+
+    return products.filter((product) => names.includes(product.item));
+  }
+
+  async updateProductsLastOrdered(names) {
+    const products = await this.findMany();
+    const updatedProducts = products.map((product) => {
+      return names.includes(product.item) 
+        ? { ...product, details: { ...product.details, last_ordered: DateTime.utc().toLocaleString() } } 
+        : product;
+    });
+
+    await this.updateMany(updatedProducts);
   }
 }
 

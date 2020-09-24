@@ -1,7 +1,7 @@
 const express = require('express');
 const createCustomerController = require('./controllers/customer.controller');
 const createProductController = require('./controllers/product.controller');
-const createRoutes = require('./routes');
+const createRoutes = require('./routes/private_routes');
 const bodyParser = require('body-parser');
 const createFxExchange = require('./services/fx_exchange');
 const authenticateRequest = require('./services/authentication');
@@ -11,7 +11,7 @@ function createApp(customerDbService, productDbService, fxHttp, fxAccessKey) {
 
   app.use(bodyParser.json({ limit: '50mb' }));
   app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
-  
+
   app.use(authenticateRequest);
 
   const fxService = createFxExchange(fxHttp, fxAccessKey);
