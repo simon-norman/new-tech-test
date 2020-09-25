@@ -20,6 +20,7 @@ function createApp(deps) {
   const publicRoutes = createPublicRoutes(ordersController);
   app.use('/', publicRoutes);
 
+  // authenticating requests only for private routes
   app.use(authenticateRequest);
 
   const fxService = createFxExchange(fxHttp, fxAccessKey);

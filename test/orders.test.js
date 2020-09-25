@@ -7,10 +7,6 @@ const testInventoryData = require('./inventory_test_data');
 const dateTime = require('luxon');
 const createCustomerRequestsDbService = require('../src/data/customer/customer_requests_db_service');
 
-jest.mock('../src/services/authentication.js', () => (request, response, next) => {
-  next();
-});
-
 const mockDate = '10/12/2019';
 jest.mock('luxon');
 dateTime.DateTime.utc.mockImplementation(() => mockDate);

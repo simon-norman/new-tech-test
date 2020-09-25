@@ -53,7 +53,7 @@ describe('Given that there are three customers in the database', () => {
 
     const { body } = await request(app)
       .get('/customers/1/distance')
-      .query({ location: { latitude: 0.13, longitude: 0.111 }});
+      .query({ latitude: 0.13, longitude: 0.111 });
     expect(body).toEqual({ distance: 12360789 })
   });
 });

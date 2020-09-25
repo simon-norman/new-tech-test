@@ -7,13 +7,13 @@ class OrderController {
     this.customerRequestsService = customerRequestsService;
   }
 
-  create = async (request, response, next) => {
+  create = async (request, response) => {
     const customer = await this.customerDbService.findOne(request.params.customerId);
     if (!customer) {
       response.status(401).json({ message: 'Customer not registered' });
     }
-    // not awaited as below processes are not dependent on this
-    this.customerRequestsService.insertOne(
+   
+    await this.customerRequestsService.insertOne(
       { customer_id: customer.id, customer_first_name: customer.first_name, customer_last_name: customer.last_name }
     );
 
@@ -21,8 +21,10 @@ class OrderController {
     const dbProducts = await this.productDbService.findManyByName(productNames);
     const totalOrderAmount = this.calculateTotalOrderAmount(request.body, dbProducts);
 
-    await this.productDbService.updateProductsLastOrdered(productNames);
-    await this.customerDbService.addLatestTransaction(totalOrderAmount, request.params.customerId);
+    await Promise.all([
+      this.productDbService.updateProductsLastOrdered(productNames),
+      this.customerDbService.addLatestTransaction(totalOrderAmount, request.params.customerId),
+    ]);
 
     response.sendStatus(200);
   }

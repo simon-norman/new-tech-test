@@ -6,7 +6,7 @@ class ProductController {
     this.fxExchange = fxExchange;
   }
 
-  updateCurrency = async (request, response, next) => {
+  updateCurrency = async (request, response) => {
     const product = await this.productDbService.findOne(request.params.product_name);
     const { supplier_details: { currency }, details: { price } } = product;
 
@@ -16,7 +16,7 @@ class ProductController {
     
     const updatedProduct = { 
       ...product, 
-      supplier_details: { ...product.supplier_details, currency },
+      supplier_details: { ...product.supplier_details, currency: request.body.new_currency },
       details: { ...product.details, price: newPrice }
     };
     await this.productDbService.updateOne(updatedProduct);
@@ -24,7 +24,7 @@ class ProductController {
     response.status(200).json(updatedProduct);
   }
 
-  add = async (request, response, next) => {
+  add = async (request, response) => {
     const { item, details, supplier_details } = request.body;
     // whilst request body and product db structures are the same, specifically mapping data to
     // prevent any random data being inserted (though in full app would add api validation)

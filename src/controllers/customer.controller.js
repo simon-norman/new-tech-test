@@ -14,7 +14,8 @@ class CustomerController {
 
   calculateDistance = async (request, response) => {
     const customer = await this.customerDbService.findOne(request.params.customer_id);
-    const distance = geolib.getDistance(customer.address.coordinates, request.query.location, 1);
+    const location = { latitude: request.query.latitude, longitude: request.query.longitude };
+    const distance = geolib.getDistance(customer.address.coordinates, location, 1);
 
     response.status(200).json({ distance });
   }

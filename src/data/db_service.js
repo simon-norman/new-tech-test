@@ -2,8 +2,8 @@ const fs = require('fs').promises;
 const path = require('path');
 
 class DbService {
-  constructor(filename) {
-    this.path = path.join(__dirname, filename);
+  constructor(path) {
+    this.path = path;
   }
 
   async read() {

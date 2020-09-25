@@ -11,7 +11,7 @@ class FxExchange {
     );
     const rate = data.quotes[`${old_currency}${new_currency}`];
 
-    return rate * old_price;
+    return (rate * old_price).toFixed(2);
   }
 }
 
