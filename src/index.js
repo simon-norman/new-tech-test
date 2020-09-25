@@ -1,7 +1,7 @@
 const axios = require('axios');
 const createApp = require('./create_app');
 const createCustomerDbService = require('./data/customer/customer_db_service');
-const createCustomerRequestsDbService = require('./data/customer_requests_db_service');
+const createCustomerRequestsDbService = require('./data/customer/customer_requests_db_service');
 const createProductDbService = require('./data/product/product_db_service');
 const createScheduler = require('./services/scheduler');
 require('dotenv').config();
