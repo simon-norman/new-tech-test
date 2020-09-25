@@ -1,9 +1,21 @@
-const DbService = require("./db_service");
+const DbService = require("../db_service");
 const { DateTime } = require('luxon');
 
 class ProductDbService extends DbService {
-  async findOne(name) {
+  async findManyWithPricesAsFloat() {
     const products = await this.findMany();
+
+    return products.map((product) => ({
+      ...product,
+      details: {
+        ...product.details,
+        price: parseFloat(product.details.price),
+      }
+    }));
+  }
+
+  async findOne(name) {
+    const products = await this.findManyWithPricesAsFloat();
 
     return products.find((product) => product.item === name);
   }
@@ -23,7 +35,7 @@ class ProductDbService extends DbService {
   }
 
   async findManyByName(names) {
-    const products = await this.findMany();
+    const products = await this.findManyWithPricesAsFloat();
 
     return products.filter((product) => names.includes(product.item));
   }

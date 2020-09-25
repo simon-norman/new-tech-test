@@ -9,7 +9,7 @@ function createPrivateRoutes(customerController, productController) {
 
   router.put('/products/:product_name/currency', productController.updateCurrency);
 
-  router.post('/order', productController.add);
+  router.post('/products', productController.add);
 
   return router;
 }

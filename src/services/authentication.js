@@ -1,6 +1,6 @@
 function authenticateRequest(req, res, next) {
   if (req.headers.auth !== `Bearer Money4MeNot4u`) {
-    res.status(401).json({ message: 'BOJIM AM WARNING YOU!' });
+    return res.status(401).json({ message: 'BOJIM AM WARNING YOU!' });
   }
 
   next();

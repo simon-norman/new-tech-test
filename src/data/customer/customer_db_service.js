@@ -1,4 +1,4 @@
-const DbService = require("./db_service");
+const DbService = require("../db_service");
 const { DateTime } = require('luxon');
 
 class CustomerDbService extends DbService {

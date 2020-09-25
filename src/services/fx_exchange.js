@@ -5,11 +5,11 @@ class FxExchange {
   }
 
   async convertPrice({ old_currency, new_currency, old_price }) {
-    const latestRates = await this.http.get(
+    const { data } = await this.http.get(
       '/live', 
-      { params: { source: old_currency, currencies: [new_currency], access_key: this.accessKey } }
+      { params: { source: old_currency, currencies: new_currency, access_key: this.accessKey } }
     );
-    const rate = latestRates[`${old_currency}${new_currency}`];
+    const rate = data.quotes[`${old_currency}${new_currency}`];
 
     return rate * old_price;
   }

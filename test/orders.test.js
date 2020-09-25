@@ -1,11 +1,11 @@
 const request = require('supertest');
 const createApp = require('../src/create_app');
-const createCustomerDbService = require('../src/data/customer_db_service');
-const createProductDbService = require('../src/data/product_db_service');
+const createCustomerDbService = require('../src/data/customer/customer_db_service');
+const createProductDbService = require('../src/data/product/product_db_service');
 const testCustomerData = require('./customer_test_data');
 const testInventoryData = require('./inventory_test_data');
 const dateTime = require('luxon');
-const createCustomerRequestsDbService = require('../src/data/customer_requests_db_service');
+const createCustomerRequestsDbService = require('../src/data/customer/customer_requests_db_service');
 
 jest.mock('../src/services/authentication.js', () => (request, response, next) => {
   next();
@@ -42,9 +42,6 @@ describe('Customer orders', () => {
   });
 
   describe('When customer 4 purchases 12 dolphins and 4 truffles', () => {
-    let dolphin;
-    let truffles;
-
     beforeEach(async () => {
       const orders = [
         { item: 'dolphin', amount: 12 },

@@ -1,7 +1,7 @@
 const request = require('supertest');
 const createApp = require('../src/create_app');
-const createCustomerDbService = require('../src/data/customer_db_service');
-const createProductDbService = require('../src/data/product_db_service');
+const createCustomerDbService = require('../src/data/customer/customer_db_service');
+const createProductDbService = require('../src/data/product/product_db_service');
 const testCustomerData = require('./customer_test_data');
 
 jest.mock('../src/services/authentication.js', () => (request, response, next) => {
